@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+    <style>
+    fieldset
+    {
+    float:left;
+    width:47%;
+    }
+
+    </style>
+</head>
+<body ng-app ="myApp">
+
+        <div ng-controller="myController">
+
+ <fieldset>
+	  <legend>Consulter votre compte</legend>
+	  <input type="text" ng-model="codeCompte"/>
+	  <button ng-click="myFunc()">Consulter</button>
+
+	  <section ng-if="compte.solde">
+	  
+	    Code compte: {{compte.codeCompte}}<br/>
+		  Solde: {{compte.solde}} <br/>
+		  <div ng-if="compte.decouvert">
+				Type: Compte courant<br/>
+		        Decouvert: {{compte.decouvert}} <br />
+		 </div>
+		 <div ng-if="compte.taux">
+		 	Type: Compte Epargne<br/>
+			Taux: {{compte.taux}}<br/>
+		</div>
+	</section>
+		</fieldset>
+		
+		<section ng-if="compte.solde">
+		<fieldset>	
+		<legend>Faire une opération</legend>
+
+	 <label>Versement :</label>
+	 <input type="radio" ng-model="operation.type" value="versement"/>
+	 <label>Retrait :</label>
+	 <input type="radio" ng-model="operation.type" value="retrait"/>
+	 <label>Virement :</label>
+	 <input type="radio" ng-model="operation.type" value="virement"/><br/>
+	 <label>Montant :</label>
+	 <input type="text" ng-model="operation.montant"/><br/>
+	 <span ng-if="operation.type=='virement'">
+	 </span>
+	 <button ng-click="operer()">Confirmer</button>
+
+</fieldset>
+	 </section>
+        
+ 
+
+   
+    <script>
+        var myApp = angular.module('myApp', []);
+
+        myApp.controller("myController", function ($scope, $http) {
+        	  $scope.compte = {}
+        	  $scope.codeCompte = null;
+        	  $scope.cpt2 = null;
+        	  $scope.operation = {type:"retrait"}
+        	  $scope.myFunc=function(){
+        		  
+        		  var onSuccess = function (data, status, headers, config) {
+                      $scope.compte = data;
+                  };
+
+                  var onError = function (data, status, headers, config) {
+                      $scope.error = status;
+                  }
+              
+                  var promise = $http.get("/retrait-service/comptes/"+$scope.codeCompte);
+                  
+                  promise.success(onSuccess);
+                  promise.error(onError);
+
+        	  };
+        	  
+        	  
+					$scope.operer=function(){
+						var params=""
+						if($scope.operation.type=="virement")
+							params="cp1="+$scope.codeCompte+"&montant="+$scope.operation.montant+"&cp2="+$scope.operation.cp2;
+						
+						else
+							params="code="+$scope.codeCompte+"&montant="+$scope.operation.montant;
+							
+						
+							var action = $http({
+							    method: 'PUT',
+							    url: $scope.operation.type,
+							    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+							    data: params,
+							})
+							.success(function(data){
+								$scope.myFunc();
+							  });
+							
+        	  };
+        	  
+           
+         
+        });
+    </script>
+</body>
+</html>
