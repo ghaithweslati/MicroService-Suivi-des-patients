@@ -1,0 +1,118 @@
+<div>
+  <div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6">
+        <h2>Gestion <b>des dossiers</b></h2>
+      </div>
+      <div class="col-sm-6">
+        <a href="#ajoutDossierModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter dossier</span></a>				
+      </div>
+            </div>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Patient</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let doss of dossiers | async ">
+                    <td>{{doss.code}}</td>
+                    <td>{{doss.nom}}</td>
+                    <td>{{doss.type}}</td>
+                    <td>{{doss.date_doss}}</td>
+                    <td>{{doss.patient.nom}} {{doss.patient.prenom}}</td>
+                    <td>
+                        <a href="#modalModifierDossier" (click)="init(doss)" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a (click)="supprimerDossier(doss.code)" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+<div id="ajoutDossierModal" class="modal fade">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <form>
+      <div class="modal-header">						
+        <h4 class="modal-title">Ajouter dossier</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">					
+        <div class="form-group">
+          <label>Emplacement</label>
+          <input type="file" class="form-control" required [(ngModel)]="dossier.nom" name="nom">
+        </div>
+        <div class="form-group">
+          <label>Type</label><br/>
+          <input type="radio" name="options" [(ngModel)]="dossier.type" value="Ordonnance">
+          Ordonnance
+          <br/><input type="radio" name="options" [(ngModel)]="dossier.type" value="Rapport">
+          Rapport
+          <br/><input type="radio" name="options" [(ngModel)]="dossier.type" value="Fiche">
+          Fiche
+        </div>
+        <div class="form-group">
+          <label>Patient</label><br/>
+          <select name="duration" [(ngModel)]="dossier.patient.id"> 
+            <option *ngFor="let patient of patients | async" [value]="patient.id">{{patient.nom}} {{patient.prenom}}</option> 
+        </select> 
+        </div>	
+      </div>
+      <div class="modal-footer">
+        <input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
+        <input type="submit" class="btn btn-success" value="Ajouter" (click)="ajouterDossier()">
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+
+
+	<!-- Edit Modal HTML -->
+	<div id="modalModifierDossier" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+        <form>
+          <div class="modal-header">						
+            <h4 class="modal-title">Modifier dossier</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">					
+            <div class="form-group">
+              <label>Emplacement</label>
+              <input type="file" class="form-control" required [(ngModel)]="dossier.nom" name="nom">
+            </div>
+            <div class="form-group">
+              <label>Type</label><br/>
+              <input type="radio" name="options" [(ngModel)]="dossier.type" value="Ordonnance">
+              Ordonnance
+              <br/><input type="radio" name="options" [(ngModel)]="dossier.type" value="Rapport">
+              Rapport
+              <br/><input type="radio" name="options" [(ngModel)]="dossier.type" value="Fiche">
+              Fiche
+            </div>
+            <div class="form-group">
+              <label>Patient</label><br/>
+              <select name="duration" [(ngModel)]="dossier.patient.id"> 
+                <option *ngFor="let patient of patients | async" [value]="patient.id">{{patient.nom}} {{patient.prenom}}</option> 
+            </select> 
+            </div>				
+          </div>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
+            <input type="submit" class="btn btn-success" value="Modifier" (click)="modifierDossier()">
+          </div>
+        </form>
+			</div>
+		</div>
+	</div>
+
+</div>
