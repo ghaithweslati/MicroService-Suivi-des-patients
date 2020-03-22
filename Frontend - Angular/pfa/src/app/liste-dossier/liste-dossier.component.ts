@@ -34,6 +34,8 @@ export class ListeDossierComponent implements OnInit {
   }
 
   ajouterDossier() {
+    
+    this.dossier.nom=this.dossier.nom.split("fakepath\\")[0]+this.dossier.nom.split("fakepath\\")[1];
     this.dossierService.ajouterDossier(this.dossier)
       .subscribe(data => this.reloadData(), error => console.log(error));
       this.dossier = new Dossier();
@@ -42,15 +44,10 @@ export class ListeDossierComponent implements OnInit {
   }
 
   modifierDossier() {
- 
-    if(this.dossier.code)
-    {
-    this.dossierService.modifierDossier(this.dossier.code,this.dossier)
+      this.dossier.nom=this.dossier.nom.split("fakepath\\")[0]+this.dossier.nom.split("fakepath\\")[1];
+      this.dossierService.modifierDossier(this.dossier.code,this.dossier)
       .subscribe(data => this.reloadData(), error => console.log(error));
       this.dossier = new Dossier();
-
-    }
-
   }
 
 

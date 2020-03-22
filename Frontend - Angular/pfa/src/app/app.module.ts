@@ -3,18 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AjoutDossierComponent } from './ajout-dossier/ajout-dossier.component';
-import { AfficherDossierComponent } from './afficher-dossier/afficher-dossier.component';
 import { ListeDossierComponent } from './liste-dossier/liste-dossier.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ListePatientComponent } from './liste-patient/liste-patient.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AjoutDossierComponent,
-    AfficherDossierComponent,
-    ListeDossierComponent
+    ListeDossierComponent,
+    ListePatientComponent
   ],
   imports: [
     BrowserModule,FormsModule,
