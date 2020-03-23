@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { Router } from '@angular/router';
 import { DossierService } from "../dossier.service";
 import { Patient } from "../patient";
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-liste-dossier',
@@ -15,13 +16,16 @@ export class ListeDossierComponent implements OnInit {
   dossier: Dossier = new Dossier();
   selectedValue:String;
   patients: Observable<Patient[]>;
-  constructor(private dossierService: DossierService,
-    private router: Router) {}
+  constructor(private dossierService: DossierService,public myapp: AppComponent,
+    private router: Router) {
+
+    }
 
 
   ngOnInit(): void {
     this.reloadData();
     this.afficherPatients();
+
   }
 
   reloadData() {
@@ -30,23 +34,28 @@ export class ListeDossierComponent implements OnInit {
 
   init(dossier)
   {
-    this.dossier=dossier;
+    this.dossier=Object.assign({}, dossier);
   }
 
   ajouterDossier() {
     
     this.dossier.nom=this.dossier.nom.split("fakepath\\")[0]+this.dossier.nom.split("fakepath\\")[1];
     this.dossierService.ajouterDossier(this.dossier)
-      .subscribe(data => this.reloadData(), error => console.log(error));
+      .subscribe(data => {
+        this.reloadData();
+        this.myapp.Success("Dossier ajouté avec succès");
+      }, error => this.myapp.Echec("Ajout de dossier échouée"));
       this.dossier = new Dossier();
-
 
   }
 
   modifierDossier() {
       this.dossier.nom=this.dossier.nom.split("fakepath\\")[0]+this.dossier.nom.split("fakepath\\")[1];
       this.dossierService.modifierDossier(this.dossier.code,this.dossier)
-      .subscribe(data => this.reloadData(), error => console.log(error));
+      .subscribe(data =>{
+        this.reloadData();
+        this.myapp.Success("Dossier modifié avec succès");
+      } , error => this.myapp.Echec("Modification de dossier échouée"));
       this.dossier = new Dossier();
   }
 
@@ -57,7 +66,9 @@ export class ListeDossierComponent implements OnInit {
       {
         this.dossierService.supprimerDossier(id)
         .subscribe(
-          data => {this.reloadData()
+          data => {
+            this.reloadData();
+            this.myapp.Success("Dossier supprimé avec succès")
           },
           error => alert(JSON.stringify(error)));
           this.reloadData();
