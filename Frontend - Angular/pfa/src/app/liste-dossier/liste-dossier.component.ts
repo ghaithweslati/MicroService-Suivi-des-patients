@@ -18,7 +18,7 @@ export class ListeDossierComponent implements OnInit {
   patients: Observable<Patient[]>;
   constructor(private dossierService: DossierService,public myapp: AppComponent,
     private router: Router) {
-
+      myapp.titre="Dossiers";
     }
 
 

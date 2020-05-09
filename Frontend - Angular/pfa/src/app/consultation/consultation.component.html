@@ -1,0 +1,76 @@
+
+
+      <!-- THE CALENDAR -->
+   
+      <full-calendar
+      (dateClick)="handleDateClick($event)"
+      (eventClick)="handleEventClick($event)"
+        defaultView="dayGridMonth"
+        [plugins]="calendarPlugins"
+        [events]="events"
+      ></full-calendar>
+ 
+    
+
+<!-- /.col -->
+
+
+<div #myDiv class="w3-modal" style="display: none"> 
+	<div id="modalEnregistrerConsultation">
+		<div class="modal-dialog">
+			<div class="modal-content">
+        <form>
+          <div class="modal-header">						
+            <h4 class="modal-title">Enregistrer Consultation</h4>
+            <button type="button" class="close" data-dismiss="modal" (click)=fermer() aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">		
+            <div class="form-group">
+              <label>Patient</label><br/>
+              <select name="duration" [(ngModel)]="consultation.patient.id"> 
+                <option *ngFor="let patient of patients | async" [value]="patient.id">{{patient.nom}} {{patient.prenom}}</option> 
+            </select> 
+            </div>			
+            <div class="form-group">
+              <label>Date</label>
+              <input type="text" class="form-control" [(ngModel)]="consultation.date" [value]="consultation.date" name="date">
+            </div>
+
+            <div class="form-group">
+              <label>Heure</label>
+              <input type="text" class="form-control" placeholder="hh:mm" [(ngModel)]="consultation.heure" name="heure">
+            </div>
+
+            <div class="form-group">
+              <label>Type</label><br/>
+              <input type="radio" name="options" [(ngModel)]="consultation.type" value="Consultation">
+              Consultation
+              <br/><input type="radio" name="options" [(ngModel)]="consultation.type" value="Contrôle">
+              Contrôle
+              <br/>
+            </div>	
+            <div class="form-group">
+              <label>Etat de patient {{consultation.etat}}/10</label><br/>
+              <div class="d-flex justify-content-center my-4">
+                <div class="w-75">
+                  <input type="range" class="custom-range" id="customRange11" (input)="valueChanged($event.target.value)" min="0" max="10"/>
+                </div>
+                <span class="font-weight-bold text-primary ml-2 valueSpan2"></span>
+              </div>
+            </div>			
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Remarque</label>
+              <textarea class="form-control"  [(ngModel)]="consultation.remarque" rows="3" name="remarque"></textarea>
+            </div>	
+          </div>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler" (click)=fermer()>
+            <input type="submit" class="btn btn-success" value="Enregistrer"  (click)="ajouterConsultation()">
+          </div>
+        </form>
+			</div>
+		</div>
+	</div>
+
+  </div>
+

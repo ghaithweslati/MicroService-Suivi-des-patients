@@ -1,22 +1,27 @@
-<div>
-    <div class="container">
-      <div class="table-wrapper">
-          <div class="table-title">
-              <div class="row">
-                  <div class="col-sm-6">
-          <h2>Gestion <b>des patients</b></h2>
-        </div>
-        <div class="col-sm-6">
-          <a href="#ajoutPatientModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter patient</span></a>				
-        </div>
-              </div>
+<div class="card">
+  <div class="card-header">
+    <div class="col-sm-6">
+      <a href="#ajoutPatientModal" class="btn btn-success" data-toggle="modal"><span>Ajouter patient</span></a>				
+    </div>  
+  </div>
+  <div class="card-body">
+    <div>
+      <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
           </div>
+    
+                </div>
+            </div>
           <table class="table table-striped table-hover">
               <thead>
                   <tr>
                       <th>ID</th>
                       <th>Nom</th>
                       <th>Prenom</th>
+                      <th>Email</th>
                       <th>Adresse</th>
                       <th>Telephone</th>
                       <th>Actions</th>
@@ -27,12 +32,22 @@
                       <td>{{pat.id}}</td>
                       <td>{{pat.nom}}</td>
                       <td>{{pat.prenom}}</td>
+                      <td>{{pat.email}}</td>
                       <td>{{pat.adresse}}</td>
                       <td>{{pat.numTelephone}}</td>
-                      <td>
-                          <a href="#modalModifierPatient" (click)="init(pat)" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                          <a (click)="supprimerPatient(pat.id)" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                      </td>
+                      <td class="project-actions text-right">
+                        <a class="btn btn-info btn-sm" href="#modalModifierPatient" (click)="init(pat)"  data-toggle="modal">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Modifier
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="#" (click)="supprimerPatient(pat.id)" data-toggle="modal" >
+                          <i class="fas fa-trash">
+                          </i>
+                          Supprimer
+                      </a>
+                      
+                        </td>
                   </tr>
               </tbody>
           </table>
@@ -52,6 +67,14 @@
           <div class="form-group">
             <label>Prenom</label>
             <input type="text" class="form-control" required [(ngModel)]="patient.prenom" name="prenom">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" required [(ngModel)]="patient.email" name="email">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" required [(ngModel)]="patient.password" name="password">
           </div>
           <div class="form-group">
             <label>Adresse</label>
@@ -96,6 +119,14 @@
                         <input type="text" class="form-control" required [(ngModel)]="patient.adresse" name="adresse">
                       </div>
                       <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" required [(ngModel)]="patient.email" name="email">
+                      </div>
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" required [(ngModel)]="patient.password" name="password">
+                      </div>
+                      <div class="form-group">
                         <label>numTelephone</label>
                         <input type="text" class="form-control" required [(ngModel)]="patient.numTelephone" name="numTelephone">
                       </div>
@@ -110,3 +141,8 @@
       </div>
   
   </div>
+</div>
+<!-- /.card -->
+</div>
+<!-- /.col -->
+</div>

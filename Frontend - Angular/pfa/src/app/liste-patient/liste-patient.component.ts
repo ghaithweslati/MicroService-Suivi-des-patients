@@ -19,7 +19,9 @@ export class ListePatientComponent implements OnInit {
   selectedValue:String;
   toasterService:ToasterService;
   constructor(private patientService: PatientService,public myapp: AppComponent,
-    private router: Router) {}
+    private router: Router) {
+      myapp.titre="Patients";
+    }
 
   ngOnInit(): void {
     this.reloadData();

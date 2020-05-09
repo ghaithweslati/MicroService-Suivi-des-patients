@@ -1,0 +1,12 @@
+full-calendar
+{
+    background-color: white;
+    position: absolute;
+    z-index: 0;
+}
+
+.fc-title
+{
+    color: white;
+    background-color: white;
+}
