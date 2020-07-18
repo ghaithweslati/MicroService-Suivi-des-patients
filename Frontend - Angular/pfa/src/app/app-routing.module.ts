@@ -6,6 +6,7 @@ import { ChatbotComponent } from './chatbot/chatbot.component';
 import { ConsultationComponent } from './consultation/consultation.component';
 import { EtatComponent } from './etat/etat.component';
 import { LoginComponent } from './login/login.component';
+import { ProfilComponent } from './profil/profil.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'patients', component: ListePatientComponent },
   { path: 'chatbot', component: ChatbotComponent},
   { path: 'consultation', component: ConsultationComponent } ,
-  { path: 'etat', component: EtatComponent } 
+  { path: 'etat', component: EtatComponent } ,
+  { path: 'profil', component: ProfilComponent } 
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

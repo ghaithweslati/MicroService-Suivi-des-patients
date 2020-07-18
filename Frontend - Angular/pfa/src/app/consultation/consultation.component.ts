@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {AfterViewInit, ElementRef, ViewChild} from '@angular/core';
-
+import * as jsPDF from 'jspdf';
 import { Consultation } from "../consultation";
 import { Observable } from "rxjs";
 import { Router } from '@angular/router';
@@ -86,4 +86,6 @@ events=[];
       this.fermer()
 
   }
+
+
 }

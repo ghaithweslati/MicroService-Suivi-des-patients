@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { ConsultationService } from "../consultation.service";
 import { AppComponent } from '../app.component';
 import { Consultation } from "../consultation";
-
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-etat',
@@ -19,6 +19,7 @@ export class EtatComponent implements OnInit {
   labels=[];
   data=[];
   consultations:Consultation[] = [];
+  rapport="";
   constructor(private consultationService: ConsultationService,public myapp: AppComponent,
     private router: Router) { 
       myapp.titre="Etat du patient"
@@ -43,10 +44,24 @@ export class EtatComponent implements OnInit {
         consultations => {
           this.consultations = consultations;
 
+          const pat = this.consultations[0].patient;
+          this.rapport+="Patient:\n"
+          this.rapport+="Nom & prénom: "+pat.nom+" "+pat.prenom+"\n";
+          this.rapport+="Email: "+pat.email+"\n";
+          this.rapport+="Num tel: "+pat.numTelephone+"\n";
+          this.rapport+="Adresse: "+pat.adresse+"\n\n";
+          this.rapport+="Les consultations :\n";
           for(let i=0;i<this.consultations.length;i++)
           {
           tabs.push( this.consultations[i].date);
           tab2.push(this.consultations[i].etat)
+
+          this.rapport+="\nConsultation "+(i+1)+"\n";
+          this.rapport+="Dat1e : "+this.consultations[i].date +" "+this.consultations[i].heure+"\n";
+          this.rapport+="Type : "+this.consultations[i].type+"\n";
+          this.rapport+="Etat du patient : "+this.consultations[i].etat+"/10 \n";
+          if(this.consultations[i].remarque)
+             this.rapport+="Remarque : "+this.consultations[i].remarque+"\n";
           }
          this.labels=tabs;
          this.data=tab2;
@@ -90,6 +105,14 @@ export class EtatComponent implements OnInit {
   
 onChange(deviceValue) {
   this.afficherChart(deviceValue);
+}
+
+
+generatePDF()
+{
+    const doc = new jsPDF();
+    doc.text(this.rapport,15,15);
+    doc.save("Rapport.pdf" );
 }
 
 }
